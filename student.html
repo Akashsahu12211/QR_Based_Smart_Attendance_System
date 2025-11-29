@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h2>Student Page</h2>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <!-- Student Profile Section -->
+             <div class="card">
+                <h3>Student Profile</h3>
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    <img id="studentPhoto" src="" alt="Photo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #667eea;">
+                    <div style="flex: 1;">
+                        <p><strong>Name:</strong> <span id="studentName"></span></p>
+                        <p><strong>System ID:</strong> <span id="studentSystemId"></span></p>
+                        <p><strong>Department:</strong> <span id="studentDept"></span></p>
+                        <p><strong>Total Attendance:</strong> <span id="totalAttendance" style="color: #27ae60; font-weight: bold;">0</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR Scanner Section -->
+           <div class="card">
+                <h3>Scan Attendance QR</h3>
+                
+                <!-- Method 1: Camera Scanner -->
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">📷 Method 1: Scan with Camera</h4>
+                    <button class="primary-btn" onclick="startScanner()">Start Scanner</button>
+                    <button class="secondary-btn hidden" id="stopScanBtn" onclick="stopScanner()">Stop Scanner</button>
+                    
+                    <div id="scannerContainer" class="scanner-container hidden">
+                        <video id="video" autoplay playsinline></video>
+                        <canvas id="canvas" class="hidden"></canvas>
+                        <div class="scanner-overlay">
+                            <div class="scanner-frame"></div>
+                        </div>
+                        <p class="scanner-hint">Position QR code within the frame</p>
+                    </div>
+                </div>
+                
+                <!-- Method 2: Manual Entry -->
+                <div class="manual-input" style="margin-bottom: 20px; padding-top: 20px; border-top: 2px dashed #e0e0e0;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">⌨️ Method 2: Enter QR Code Manually</h4>
+                    <textarea id="manualQR" placeholder="Paste QR code data here..." rows="3"></textarea>
+                    <button class="primary-btn" onclick="processManualQR()">Submit QR Code</button>
+                </div>
+                
+                <!-- Method 3: Upload QR Image -->
+                <div style="padding-top: 20px; border-top: 2px dashed #e0e0e0;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">🖼️ Method 3: Upload QR Image</h4>
+                    <input type="file" id="qrImageUpload" accept="image/*" style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; margin-bottom: 10px;">
+                    <button class="primary-btn" onclick="uploadAndProcessQR()">Process Uploaded Image</button>
+                    <canvas id="uploadCanvas" style="display: none;"></canvas>
+                </div>
+                
+                <div id="scanResult" class="scan-result hidden"></div>
+            </div>
+
+            <!-- My Attendance Section -->
+            <div class="card">
+                <h3>My Attendance History</h3>
+                <div class="table-container">
+                    <table id="myAttendanceTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Session ID</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myAttendanceBody">
+                            <tr>
+                                <td colspan="3" class="no-data">No attendance records yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Check if user is logged in as student
+        if (localStorage.getItem('userRole') !== 'student') {
+            window.location.href = 'index.html';
+        }
+        loadMyAttendance();
+    </script>
+</body>
+</html>

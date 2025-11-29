@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h2>Teacher Dashboard</h2>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <!-- Teacher Profile Section -->
+            <div class="card">
+                <h3>Teacher Profile</h3>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <img id="teacherPhoto" src="" alt="Photo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #667eea;">
+                    <div>
+                        <p><strong>Name:</strong> <span id="teacherName"></span></p>
+                        <p><strong>System ID:</strong> <span id="teacherSystemId"></span></p>
+                        <p><strong>Department:</strong> <span id="teacherDept"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR Code Generation Section -->
+            <div class="card">
+                <h3>Generate QR Code</h3>
+                <button class="primary-btn" onclick="generateQR()">Generate QR</button>
+                <div id="qrDisplay" class="qr-display hidden">
+                    <img id="qrImage" alt="QR Code" style="max-width: 300px; margin: 0 auto; display: block;">
+                    <p class="qr-info">
+                        <strong>Session ID:</strong> <span id="qrId"></span><br>
+                        <strong>Generated:</strong> <span id="qrTime"></span>
+                    </p>
+                    
+                    <!-- QR Download & Share Buttons -->
+                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <button class="primary-btn" onclick="downloadQR()" style="flex: 1;">📥 Download QR</button>
+                        <button class="primary-btn" onclick="shareQR()" style="flex: 1;">📤 Share QR</button>
+                    </div>
+                    
+                    <div class="qr-text-data">
+                        <p><strong>QR Code Data (for manual entry):</strong></p>
+                        <textarea id="qrDataText" readonly rows="3"></textarea>
+                        <button class="primary-btn" onclick="copyQRData()">Copy QR Data</button>
+                    </div>
+                </div>
+                
+                <!-- Session History -->
+                <div id="sessionHistory" style="margin-top: 20px;">
+                    <h4 style="color: #667eea;">Session History</h4>
+                    <ul id="sessionList" style="list-style: none; padding: 0;">
+                        <li style="color: #999; font-style: italic;">No sessions yet</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Attendance Records Section -->
+            <div class="card">
+                <h3>Student Attendance Records</h3>
+                <button class="primary-btn" onclick="downloadCSV()">Download CSV</button>
+                <div class="table-container">
+                    <table id="attendanceTable">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>System ID</th>
+                                <th>Date</th>
+                                <th>Session ID</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceBody">
+                            <tr>
+                                <td colspan="5" class="no-data">No attendance records yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Check if user is logged in as teacher
+        if (localStorage.getItem('userRole') !== 'teacher') {
+            window.location.href = 'index.html';
+        }
+        loadAttendanceRecords();
+    </script>
+</body>
+</html>

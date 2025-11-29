@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Attendance System - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h1>QR Attendance System</h1>
+            <p class="subtitle">Select your role to continue</p>
+            
+            <div class="role-buttons">
+                <button class="role-btn teacher-btn" onclick="showLogin('teacher')">
+                    <span class="icon">👨‍🏫</span>
+                    <span>Teacher Login</span>
+                </button>
+                <button class="role-btn student-btn" onclick="showLogin('student')">
+                    <span class="icon">👨‍🎓</span>
+                    <span>Student Login</span>
+                </button>
+            </div>
+
+            <div id="loginForm" class="login-form hidden">
+                <h2 id="loginTitle">Login</h2>
+                <input type="text" id="systemId" placeholder="System ID" autocomplete="off">
+                <input type="password" id="password" placeholder="Password" autocomplete="off">
+                <button id="loginBtn" onclick="login()">Login</button>
+                <button class="back-btn" onclick="hideLogin()">Back</button>
+                <p class="error-msg" id="errorMsg"></p>
+                <p style="margin-top: 15px; color: #666; text-align: center;">
+                    Don't have an account? 
+                    <a href="resister.html" style="color: #667eea; font-weight: bold; text-decoration: none;">Register here</a>
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
